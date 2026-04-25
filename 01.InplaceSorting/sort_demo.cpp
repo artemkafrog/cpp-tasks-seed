@@ -3,13 +3,13 @@
 #include <algorithm>
 #include <random>
 #include <iomanip>
+#include <numeric>
 
 #include "collvalue.h"
 #include "sorting.h"
 
 using CollInt = CollectingValue<int>;
 
-// Random data
 std::vector<CollInt> generate_data(size_t n)
 {
     std::vector<CollInt> data(n);
@@ -33,7 +33,7 @@ int main()
     {
         auto number_data = generate_data(n);
 
-        // --- Std Sort ---
+        // --- std::sort ---
         shuffle_data(number_data);
         CollInt::reset_stats();
         std::sort(number_data.begin(), number_data.end());
@@ -42,14 +42,20 @@ int main()
         // --- Bubble Sort ---
         shuffle_data(number_data);
         CollInt::reset_stats();
-        bubble_sort(number_data.begin(), number_data.end());
-        std::cout << n << "\tBubble\t\t" << CollInt::comps << "\t\t" << CollInt::swaps << "\t\t" << CollInt::moves << "\n";
+        BubbleSort(number_data.begin(), number_data.end());
+        std::cout << n << "\tBubbleSort\t" << CollInt::comps << "\t\t" << CollInt::swaps << "\t\t" << CollInt::moves << "\n";
 
-        // --- Insertion Sort ---
+        // --- Quick Sort ---
         shuffle_data(number_data);
         CollInt::reset_stats();
-        quick_sort(number_data.begin(), number_data.end());
-        std::cout << n << "\tInsertion\t" << CollInt::comps << "\t\t" << CollInt::swaps << "\t\t" << CollInt::moves << "\n";
+        QuickSort(number_data.begin(), number_data.end());
+        std::cout << n << "\tQuickSort\t" << CollInt::comps << "\t\t" << CollInt::swaps << "\t\t" << CollInt::moves << "\n";
+
+        // --- Merge Sort ---
+        shuffle_data(number_data);
+        CollInt::reset_stats();
+        MergeSort(number_data.begin(), number_data.end());
+        std::cout << n << "\tMergeSort\t" << CollInt::comps << "\t\t" << CollInt::swaps << "\t\t" << CollInt::moves << "\n";
 
         std::cout << "--------------------------------------------------------------\n";
     }
